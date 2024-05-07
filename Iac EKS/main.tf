@@ -83,6 +83,35 @@ module "eks" {
         manager = "devops_team"
         environment = "PROD"
       }
+
+      taints = [
+        {
+          key    = "dedicated"
+          value  = "dev"
+          effect = "NO_SCHEDULE"
+        }
+      ]
+    },
+    prod-cluster-wg = {
+      min_size     = 2
+      max_size     = 4
+      desired_size = 2
+
+      instance_types = ["t3.large","t3.xlarge"]
+      capacity_type  = "SPOT"
+
+      tags = {
+        manager = "devops_team"
+        environment = "PROD"
+      }
+
+      taints = [
+        {
+          key    = "dedicated"
+          value  = "prod"
+          effect = "NO_SCHEDULE"
+        }
+      ]
     }
   }
 
