@@ -38,7 +38,6 @@ module "vpc" {
     "kubernetes.io/role/internal-elb" = 1
   }
 }
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.15.1"
@@ -65,22 +64,22 @@ module "eks" {
   # EKS Managed Node Group
   eks_managed_node_group_defaults = {
     ami_type       = "AL2_x86_64"
-    instance_types = ["m5.large","m5.xlarge"]
+    instance_types = ["m5.large", "m5.xlarge"]
 
     attach_cluster_primary_security_group = true
   }
 
   eks_managed_node_groups = {
     ascode-cluster-wg = {
-      min_size     = 2
+      min_size     = 1
       max_size     = 4
-      desired_size = 2
+      desired_size = 1
 
-      instance_types = ["t3.large","t3.xlarge"]
+      instance_types = ["t3.large", "t3.xlarge"]
       capacity_type  = "SPOT"
 
       tags = {
-        manager = "devops_team"
+        manager     = "devops_team"
         environment = "PROD"
       }
 
@@ -93,15 +92,15 @@ module "eks" {
       ]
     },
     prod-cluster-wg = {
-      min_size     = 2
+      min_size     = 1
       max_size     = 4
-      desired_size = 2
+      desired_size = 1
 
-      instance_types = ["t3.large","t3.xlarge"]
+      instance_types = ["t3.large", "t3.xlarge"]
       capacity_type  = "SPOT"
 
       tags = {
-        manager = "devops_team"
+        manager     = "devops_team"
         environment = "PROD"
       }
 
@@ -112,6 +111,19 @@ module "eks" {
           effect = "NO_SCHEDULE"
         }
       ]
+    },
+    custom-instance = {
+      min_size     = 1
+      max_size     = 4
+      desired_size = 1
+
+      instance_types = ["t3.xlarge"]
+      capacity_type  = "SPOT"
+
+      tags = {
+        manager     = "devops_team"
+        environment = "PROD"
+      }
     }
   }
 
