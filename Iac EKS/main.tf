@@ -55,6 +55,12 @@ module "eks" {
     vpc-cni = {
       most_recent = true
     }
+    amazon-cloudwatch-observability = {
+      most_recent = true
+    }
+    eks-pod-identity-agent = {
+      most_recent = true
+    }
   }
 
   vpc_id                   = module.vpc.vpc_id
@@ -70,7 +76,7 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    ascode-cluster-wg = {
+    dev-nodes = {
       min_size     = 1
       max_size     = 4
       desired_size = 1
@@ -80,7 +86,7 @@ module "eks" {
 
       tags = {
         manager     = "devops_team"
-        environment = "PROD"
+        environment = "dev"
       }
 
       taints = [
@@ -91,7 +97,7 @@ module "eks" {
         }
       ]
     },
-    prod-cluster-wg = {
+    prod-nodes = {
       min_size     = 1
       max_size     = 4
       desired_size = 1
@@ -112,10 +118,10 @@ module "eks" {
         }
       ]
     },
-    custom-instance = {
-      min_size     = 1
+    default-nodes = {
+      min_size     = 2
       max_size     = 4
-      desired_size = 1
+      desired_size = 2
 
       instance_types = ["t3.xlarge"]
       capacity_type  = "SPOT"
