@@ -12,7 +12,7 @@ locals {
   tags = {
     cluster-name = local.name
     environtment = "PROD"
-    manager = "devops-teams"
+    manager      = "devops-teams"
   }
 }
 
