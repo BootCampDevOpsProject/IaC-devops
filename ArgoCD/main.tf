@@ -1,3 +1,5 @@
+# Recurso para la instalación de HELM con la versión  3.35.4
+
 resource "helm_release" "argocd" {
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
