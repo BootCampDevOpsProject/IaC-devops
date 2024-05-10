@@ -1,3 +1,5 @@
+# Provider de hashicorp/helm utilizar para la instalación de HELM
+
 provider "helm" {
   kubernetes {
     config_path = "~/.kube/config"
